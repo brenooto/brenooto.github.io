@@ -1,104 +1,735 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Breno Oto</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Breno Oto | Advogado</title>
+
+  <meta name="description" content="Site pessoal de Breno Oto: advocacia, textos, pesquisa jurídica e reflexões." />
+
   <style>
-    body {
+    :root {
+      --bg: #080808;
+      --bg-soft: #111111;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #f4f1ea;
+      --muted: #b8b1a6;
+      --gold: #c8a45d;
+      --gold-soft: rgba(200, 164, 93, 0.18);
+      --line: rgba(255, 255, 255, 0.12);
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #f5f5f5;
-      line-height: 1.6;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(200, 164, 93, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, #080808 0%, #111111 48%, #070707 100%);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
     }
 
     header {
-      padding: 80px 20px;
-      text-align: center;
-      background: #181818;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 8, 8, 0.72);
+      border-bottom: 1px solid var(--line);
     }
 
-    header h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    header p {
-      font-size: 20px;
-      color: #bbb;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      letter-spacing: 0.04em;
     }
 
-    nav {
-      text-align: center;
-      padding: 20px;
-      background: #000;
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--gold);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      border-radius: 50%;
+      font-size: 14px;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .brand span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: -3px;
+      font-family: Arial, sans-serif;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
     }
 
     nav a {
-      color: #f5f5f5;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
+      transition: color 0.2s ease;
     }
 
-    main {
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 0 20px;
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    .hero {
+      min-height: calc(100vh - 76px);
+      display: grid;
+      align-items: center;
+      padding: 86px 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 12px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(48px, 8vw, 104px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      max-width: 850px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .lead {
+      margin-top: 28px;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+    }
+
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 42px;
+      font-family: Arial, sans-serif;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      transition: 0.2s ease;
+      font-size: 14px;
+    }
+
+    .btn.primary {
+      background: var(--gold);
+      color: #111;
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+    }
+
+    .portrait-card {
+      position: relative;
+      min-height: 500px;
+      border: 1px solid var(--card-border);
+      border-radius: 34px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03)),
+        radial-gradient(circle at top, rgba(200,164,93,0.22), transparent 48%);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.36);
+      overflow: hidden;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .portrait-card::before {
+      content: "BO";
+      position: absolute;
+      top: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 180px;
+      line-height: 1;
+      letter-spacing: -0.12em;
+      color: rgba(255,255,255,0.045);
+      font-weight: 700;
+    }
+
+    .portrait-card::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -80px;
+      top: -80px;
+      background: var(--gold-soft);
+      border-radius: 50%;
+      filter: blur(4px);
+    }
+
+    .quote {
+      position: relative;
+      z-index: 1;
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(0,0,0,0.28);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .quote p {
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .quote small {
+      display: block;
+      margin-top: 18px;
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
 
     section {
-      margin-bottom: 50px;
+      padding: 94px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 48px;
+      margin-bottom: 52px;
+    }
+
+    .section-label {
+      color: var(--gold);
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    h2 {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 19px;
+      max-width: 720px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 250px;
+      padding: 28px;
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      background: var(--card);
+      transition: 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200,164,93,0.56);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .card .number {
+      color: var(--gold);
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      margin-bottom: 42px;
+    }
+
+    .card h3 {
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    .writing-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .writing-item {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .writing-date {
+      color: var(--gold);
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .writing-item h3 {
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .writing-item p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 28px;
+      transition: 0.2s ease;
+    }
+
+    .writing-item:hover .arrow {
+      color: var(--gold);
+      transform: translateX(5px);
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .contact-card {
+      padding: 36px;
+      border-radius: 30px;
+      border: 1px solid var(--card-border);
+      background:
+        linear-gradient(145deg, rgba(200,164,93,0.16), rgba(255,255,255,0.04));
+    }
+
+    .contact-card h3 {
+      font-size: 34px;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      margin-bottom: 26px;
+    }
+
+    .contact-links {
+      display: grid;
+      gap: 12px;
+      font-family: Arial, sans-serif;
+    }
+
+    .contact-links a {
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(0,0,0,0.18);
+      transition: 0.2s ease;
+    }
+
+    .contact-links a:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
     }
 
     footer {
-      text-align: center;
-      padding: 30px;
-      color: #777;
-      background: #000;
+      padding: 36px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .section-head,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait-card {
+        min-height: 360px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .writing-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .arrow {
+        display: none;
+      }
+
+      nav ul {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(100% - 26px, var(--max));
+      }
+
+      .hero {
+        padding: 62px 0;
+      }
+
+      header {
+        position: static;
+      }
+
+      .nav {
+        height: 68px;
+      }
+
+      .brand strong {
+        font-size: 13px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      section {
+        padding: 70px 0;
+      }
+
+      .portrait-card {
+        padding: 20px;
+        border-radius: 24px;
+      }
+
+      .quote {
+        padding: 22px;
+      }
+
+      .quote p {
+        font-size: 19px;
+      }
     }
   </style>
 </head>
-<body>
 
+<body>
   <header>
-    <h1>Breno Oto</h1>
-    <p>Advogado, escritor e pesquisador.</p>
+    <div class="container nav">
+      <a href="#" class="brand" aria-label="Página inicial">
+        <div class="brand-mark">BO</div>
+        <div>
+          <strong>Breno Oto</strong>
+          <span>Advocacia & escrita</span>
+        </div>
+      </a>
+
+      <nav aria-label="Menu principal">
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#atuacao">Atuação</a></li>
+          <li><a href="#textos">Textos</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <nav>
-    <a href="#sobre">Sobre</a>
-    <a href="#textos">Textos</a>
-    <a href="#contato">Contato</a>
-  </nav>
-
   <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Direito · Pesquisa · Escrita</p>
+
+          <h1>
+            Advocacia com método, linguagem e <span>precisão.</span>
+          </h1>
+
+          <p class="lead">
+            Site pessoal de Breno Oto. Um espaço para reunir atuação jurídica,
+            textos, estudos, reflexões e projetos.
+          </p>
+
+          <div class="actions">
+            <a class="btn primary" href="#contato">Entrar em contato</a>
+            <a class="btn" href="#textos">Ler textos</a>
+          </div>
+        </div>
+
+        <aside class="portrait-card" aria-label="Frase de apresentação">
+          <div class="quote">
+            <p>
+              “Clareza não é enfeite. É ferramenta de trabalho.”
+            </p>
+            <small>Breno Oto</small>
+          </div>
+        </aside>
+      </div>
+    </section>
+
     <section id="sobre">
-      <h2>Sobre</h2>
-      <p>
-        Este é meu site pessoal. Aqui publicarei textos, reflexões, artigos e projetos.
-      </p>
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Sobre</p>
+          <div>
+            <h2>Um site para organizar ideias, textos e atuação profissional.</h2>
+            <p class="section-text">
+              Este espaço reúne conteúdos ligados à advocacia, análise jurídica,
+              escrita, cultura e pesquisa. A proposta é manter uma presença digital
+              simples, elegante e independente.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="atuacao">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Atuação</p>
+          <div>
+            <h2>Áreas de interesse e produção.</h2>
+            <p class="section-text">
+              Abaixo estão alguns eixos que podem orientar o conteúdo do site.
+              Você pode alterar estes blocos depois conforme sua preferência.
+            </p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <p class="number">01</p>
+            <h3>Direito Civil e Contratual</h3>
+            <p>
+              Textos, comentários e reflexões sobre relações privadas, contratos,
+              responsabilidade civil e contencioso.
+            </p>
+          </article>
+
+          <article class="card">
+            <p class="number">02</p>
+            <h3>Direito do Consumidor</h3>
+            <p>
+              Análises sobre conflitos de consumo, instituições financeiras,
+              plataformas digitais e práticas de mercado.
+            </p>
+          </article>
+
+          <article class="card">
+            <p class="number">03</p>
+            <h3>Pesquisa e escrita</h3>
+            <p>
+              Um espaço para textos mais livres: ensaios, estudos, cultura,
+              tecnologia, música e observações pessoais.
+            </p>
+          </article>
+        </div>
+      </div>
     </section>
 
     <section id="textos">
-      <h2>Textos</h2>
-      <p>
-        Em breve, esta seção reunirá meus textos publicados.
-      </p>
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Textos</p>
+          <div>
+            <h2>Publicações recentes.</h2>
+            <p class="section-text">
+              Por enquanto, estes são exemplos. Depois vamos transformar isso em uma
+              área real de blog, com páginas próprias para cada texto.
+            </p>
+          </div>
+        </div>
+
+        <div class="writing-list">
+          <a class="writing-item" href="#">
+            <div class="writing-date">Em breve</div>
+            <div>
+              <h3>Primeiro texto do site</h3>
+              <p>Uma breve apresentação sobre o propósito deste espaço.</p>
+            </div>
+            <div class="arrow">→</div>
+          </a>
+
+          <a class="writing-item" href="#">
+            <div class="writing-date">Em breve</div>
+            <div>
+              <h3>Notas sobre advocacia e linguagem</h3>
+              <p>Reflexões sobre clareza, estratégia e escrita jurídica.</p>
+            </div>
+            <div class="arrow">→</div>
+          </a>
+
+          <a class="writing-item" href="#">
+            <div class="writing-date">Em breve</div>
+            <div>
+              <h3>Pesquisa, tecnologia e direito</h3>
+              <p>Ideias iniciais sobre presença digital e produção intelectual.</p>
+            </div>
+            <div class="arrow">→</div>
+          </a>
+        </div>
+      </div>
     </section>
 
     <section id="contato">
-      <h2>Contato</h2>
-      <p>
-        E-mail: breno.oto@gmail.com
-      </p>
+      <div class="container contact">
+        <div class="contact-card">
+          <h3>Contato profissional</h3>
+          <p>
+            Para contato, propostas, projetos ou envio de mensagens profissionais,
+            utilize o e-mail abaixo.
+          </p>
+
+          <div class="contact-links">
+            <a href="mailto:breno.oto@gmail.com">breno.oto@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <h3>Presença digital</h3>
+          <p>
+            Esta seção pode receber links para LinkedIn, Instagram, GitHub,
+            currículo, portfólio ou qualquer outra página pública.
+          </p>
+
+          <div class="contact-links">
+            <a href="#">LinkedIn — adicionar link</a>
+            <a href="#">Instagram — adicionar link</a>
+            <a href="#">GitHub — adicionar link</a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2026 Breno Oto</p>
+    <div class="container footer-inner">
+      <span>© 2026 Breno Oto. Todos os direitos reservados.</span>
+      <span>Feito com GitHub Pages.</span>
+    </div>
   </footer>
-
 </body>
 </html>
