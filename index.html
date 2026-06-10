@@ -6,18 +6,18 @@
 
   <title>Breno Oto | Advogado</title>
 
-  <meta name="description" content="Site pessoal de Breno Oto: advocacia, textos, pesquisa jurídica e reflexões." />
+  <meta name="description" content="Breno Oto. Advogado com atuação em Direito Civil, com ênfase em Direito Digital e Direito do Consumidor, além de atuação em Direito Penal." />
 
   <style>
     :root {
       --bg: #080808;
       --bg-soft: #111111;
-      --card: rgba(255, 255, 255, 0.06);
+      --card: rgba(255, 255, 255, 0.055);
       --card-border: rgba(255, 255, 255, 0.12);
       --text: #f4f1ea;
       --muted: #b8b1a6;
       --gold: #c8a45d;
-      --gold-soft: rgba(200, 164, 93, 0.18);
+      --gold-soft: rgba(200, 164, 93, 0.16);
       --line: rgba(255, 255, 255, 0.12);
       --max: 1120px;
     }
@@ -36,8 +36,8 @@
       min-height: 100vh;
       font-family: Georgia, "Times New Roman", serif;
       background:
-        radial-gradient(circle at top left, rgba(200, 164, 93, 0.16), transparent 34%),
-        radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 28%),
+        radial-gradient(circle at top left, rgba(200, 164, 93, 0.13), transparent 34%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.07), transparent 28%),
         linear-gradient(180deg, #080808 0%, #111111 48%, #070707 100%);
       color: var(--text);
       line-height: 1.7;
@@ -49,8 +49,8 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
       background-size: 44px 44px;
       mask-image: linear-gradient(to bottom, black, transparent 85%);
     }
@@ -158,21 +158,16 @@
     }
 
     h1 {
-      font-size: clamp(48px, 8vw, 104px);
+      font-size: clamp(54px, 8vw, 112px);
       line-height: 0.95;
-      letter-spacing: -0.06em;
+      letter-spacing: -0.065em;
       max-width: 850px;
-    }
-
-    .hero h1 span {
-      color: var(--gold);
-      font-style: italic;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .lead {
-      margin-top: 28px;
-      max-width: 680px;
+      margin-top: 30px;
+      max-width: 700px;
       color: var(--muted);
       font-size: clamp(18px, 2vw, 22px);
     }
@@ -210,14 +205,14 @@
       border-color: var(--gold);
     }
 
-    .portrait-card {
+    .profile-card {
       position: relative;
       min-height: 500px;
       border: 1px solid var(--card-border);
       border-radius: 34px;
       background:
         linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03)),
-        radial-gradient(circle at top, rgba(200,164,93,0.22), transparent 48%);
+        radial-gradient(circle at top, rgba(200,164,93,0.20), transparent 48%);
       box-shadow: 0 30px 90px rgba(0,0,0,0.36);
       overflow: hidden;
       padding: 32px;
@@ -226,10 +221,10 @@
       justify-content: flex-end;
     }
 
-    .portrait-card::before {
+    .profile-card::before {
       content: "BO";
       position: absolute;
-      top: 48px;
+      top: 52px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 180px;
@@ -239,7 +234,7 @@
       font-weight: 700;
     }
 
-    .portrait-card::after {
+    .profile-card::after {
       content: "";
       position: absolute;
       width: 240px;
@@ -251,7 +246,7 @@
       filter: blur(4px);
     }
 
-    .quote {
+    .profile-info {
       position: relative;
       z-index: 1;
       padding: 28px;
@@ -261,19 +256,18 @@
       backdrop-filter: blur(12px);
     }
 
-    .quote p {
-      font-size: 22px;
-      line-height: 1.35;
+    .profile-info h2 {
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      margin-bottom: 12px;
     }
 
-    .quote small {
-      display: block;
-      margin-top: 18px;
+    .profile-info p {
       color: var(--muted);
       font-family: Arial, sans-serif;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
+      font-size: 15px;
+      line-height: 1.7;
     }
 
     section {
@@ -300,27 +294,35 @@
       font-size: clamp(34px, 5vw, 64px);
       line-height: 1;
       letter-spacing: -0.045em;
+      font-weight: 500;
     }
 
     .section-text {
       color: var(--muted);
       font-size: 19px;
-      max-width: 720px;
+      max-width: 760px;
+      margin-top: 22px;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 18px;
     }
 
     .card {
-      min-height: 250px;
+      min-height: 270px;
       padding: 28px;
       border: 1px solid var(--card-border);
       border-radius: 28px;
       background: var(--card);
       transition: 0.2s ease;
+    }
+
+    .card.featured {
+      background:
+        linear-gradient(145deg, rgba(200,164,93,0.17), rgba(255,255,255,0.055));
+      border-color: rgba(200,164,93,0.36);
     }
 
     .card:hover {
@@ -338,62 +340,29 @@
     }
 
     .card h3 {
-      font-size: 26px;
+      font-size: 24px;
       line-height: 1.1;
       margin-bottom: 16px;
+      font-weight: 500;
     }
 
     .card p {
       color: var(--muted);
-      font-size: 16px;
+      font-size: 15px;
       font-family: Arial, sans-serif;
       line-height: 1.65;
     }
 
-    .writing-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    .writing-item {
-      display: grid;
-      grid-template-columns: 160px 1fr auto;
-      gap: 24px;
-      align-items: center;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .writing-date {
-      color: var(--gold);
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .writing-item h3 {
-      font-size: 28px;
-      line-height: 1.2;
-      font-weight: 400;
-    }
-
-    .writing-item p {
-      margin-top: 7px;
+    .note {
+      margin-top: 24px;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.035);
       color: var(--muted);
       font-family: Arial, sans-serif;
       font-size: 15px;
-    }
-
-    .arrow {
-      color: var(--muted);
-      font-size: 28px;
-      transition: 0.2s ease;
-    }
-
-    .writing-item:hover .arrow {
-      color: var(--gold);
-      transform: translateX(5px);
+      line-height: 1.65;
     }
 
     .contact {
@@ -408,13 +377,14 @@
       border-radius: 30px;
       border: 1px solid var(--card-border);
       background:
-        linear-gradient(145deg, rgba(200,164,93,0.16), rgba(255,255,255,0.04));
+        linear-gradient(145deg, rgba(200,164,93,0.14), rgba(255,255,255,0.04));
     }
 
     .contact-card h3 {
       font-size: 34px;
       line-height: 1.1;
       margin-bottom: 18px;
+      font-weight: 500;
     }
 
     .contact-card p {
@@ -458,6 +428,12 @@
       flex-wrap: wrap;
     }
 
+    @media (max-width: 1000px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 900px) {
       .hero-grid,
       .section-head,
@@ -465,25 +441,18 @@
         grid-template-columns: 1fr;
       }
 
-      .portrait-card {
+      .profile-card {
         min-height: 360px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .writing-item {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-
-      .arrow {
-        display: none;
       }
 
       nav ul {
         display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .cards {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -520,17 +489,17 @@
         padding: 70px 0;
       }
 
-      .portrait-card {
+      .profile-card {
         padding: 20px;
         border-radius: 24px;
       }
 
-      .quote {
+      .profile-info {
         padding: 22px;
       }
 
-      .quote p {
-        font-size: 19px;
+      .profile-info h2 {
+        font-size: 30px;
       }
     }
   </style>
@@ -543,15 +512,14 @@
         <div class="brand-mark">BO</div>
         <div>
           <strong>Breno Oto</strong>
-          <span>Advocacia & escrita</span>
+          <span>Advogado</span>
         </div>
       </a>
 
       <nav aria-label="Menu principal">
         <ul>
           <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#atuacao">Atuação</a></li>
-          <li><a href="#textos">Textos</a></li>
+          <li><a href="#atuacao">Áreas</a></li>
           <li><a href="#contato">Contato</a></li>
         </ul>
       </nav>
@@ -562,29 +530,29 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <p class="eyebrow">Direito · Pesquisa · Escrita</p>
+          <p class="eyebrow">Advocacia · Fortaleza/CE</p>
 
-          <h1>
-            Advocacia com método, linguagem e <span>precisão.</span>
-          </h1>
+          <h1>Breno Oto</h1>
 
           <p class="lead">
-            Site pessoal de Breno Oto. Um espaço para reunir atuação jurídica,
-            textos, estudos, reflexões e projetos.
+            Advogado com atuação em Direito Civil, com ênfase em Direito Digital
+            e Direito do Consumidor, além de atuação em Direito Penal.
           </p>
 
           <div class="actions">
-            <a class="btn primary" href="#contato">Entrar em contato</a>
-            <a class="btn" href="#textos">Ler textos</a>
+            <a class="btn primary" href="#contato">Contato</a>
+            <a class="btn" href="#atuacao">Áreas de atuação</a>
           </div>
         </div>
 
-        <aside class="portrait-card" aria-label="Frase de apresentação">
-          <div class="quote">
+        <aside class="profile-card" aria-label="Informações profissionais">
+          <div class="profile-info">
+            <h2>Breno Oto</h2>
             <p>
-              “Clareza não é enfeite. É ferramenta de trabalho.”
+              Advogado em Fortaleza/CE.
+              <br />
+              Atendimento profissional em demandas cíveis, digitais, consumeristas e criminais.
             </p>
-            <small>Breno Oto</small>
           </div>
         </aside>
       </div>
@@ -595,11 +563,11 @@
         <div class="section-head">
           <p class="section-label">Sobre</p>
           <div>
-            <h2>Um site para organizar ideias, textos e atuação profissional.</h2>
+            <h2>Atendimento jurídico objetivo e profissional.</h2>
             <p class="section-text">
-              Este espaço reúne conteúdos ligados à advocacia, análise jurídica,
-              escrita, cultura e pesquisa. A proposta é manter uma presença digital
-              simples, elegante e independente.
+              Atuação voltada à análise jurídica, elaboração de peças,
+              acompanhamento processual e orientação em demandas cíveis,
+              digitais, consumeristas e penais.
             </p>
           </div>
         </div>
@@ -609,12 +577,12 @@
     <section id="atuacao">
       <div class="container">
         <div class="section-head">
-          <p class="section-label">Atuação</p>
+          <p class="section-label">Áreas</p>
           <div>
-            <h2>Áreas de interesse e produção.</h2>
+            <h2>Áreas de atuação.</h2>
             <p class="section-text">
-              Abaixo estão alguns eixos que podem orientar o conteúdo do site.
-              Você pode alterar estes blocos depois conforme sua preferência.
+              Área principal de atuação em Direito Civil, com frentes específicas
+              em Direito Digital e Direito do Consumidor. Atuação também em Direito Penal.
             </p>
           </div>
         </div>
@@ -622,74 +590,46 @@
         <div class="cards">
           <article class="card">
             <p class="number">01</p>
-            <h3>Direito Civil e Contratual</h3>
+            <h3>Direito Civil</h3>
             <p>
-              Textos, comentários e reflexões sobre relações privadas, contratos,
-              responsabilidade civil e contencioso.
+              Demandas cíveis, responsabilidade civil, obrigações, indenizações,
+              contratos, notificações, defesas, recursos e acompanhamento processual.
             </p>
           </article>
 
-          <article class="card">
+          <article class="card featured">
             <p class="number">02</p>
-            <h3>Direito do Consumidor</h3>
+            <h3>Direito Digital</h3>
             <p>
-              Análises sobre conflitos de consumo, instituições financeiras,
-              plataformas digitais e práticas de mercado.
+              Subárea do Direito Civil voltada a conflitos em plataformas digitais,
+              redes sociais, fraudes eletrônicas, remoção de conteúdo, golpes,
+              proteção de dados e ambiente virtual.
             </p>
           </article>
 
           <article class="card">
             <p class="number">03</p>
-            <h3>Pesquisa e escrita</h3>
+            <h3>Direito do Consumidor</h3>
             <p>
-              Um espaço para textos mais livres: ensaios, estudos, cultura,
-              tecnologia, música e observações pessoais.
+              Subárea do Direito Civil voltada a relações de consumo, cobranças
+              indevidas, vícios de produto, prestação de serviços, contratos e
+              conflitos com fornecedores.
+            </p>
+          </article>
+
+          <article class="card">
+            <p class="number">04</p>
+            <h3>Direito Penal</h3>
+            <p>
+              Atuação em demandas criminais, acompanhamento de procedimentos,
+              elaboração de peças defensivas, manifestações e orientação jurídica.
             </p>
           </article>
         </div>
-      </div>
-    </section>
 
-    <section id="textos">
-      <div class="container">
-        <div class="section-head">
-          <p class="section-label">Textos</p>
-          <div>
-            <h2>Publicações recentes.</h2>
-            <p class="section-text">
-              Por enquanto, estes são exemplos. Depois vamos transformar isso em uma
-              área real de blog, com páginas próprias para cada texto.
-            </p>
-          </div>
-        </div>
-
-        <div class="writing-list">
-          <a class="writing-item" href="#">
-            <div class="writing-date">Em breve</div>
-            <div>
-              <h3>Primeiro texto do site</h3>
-              <p>Uma breve apresentação sobre o propósito deste espaço.</p>
-            </div>
-            <div class="arrow">→</div>
-          </a>
-
-          <a class="writing-item" href="#">
-            <div class="writing-date">Em breve</div>
-            <div>
-              <h3>Notas sobre advocacia e linguagem</h3>
-              <p>Reflexões sobre clareza, estratégia e escrita jurídica.</p>
-            </div>
-            <div class="arrow">→</div>
-          </a>
-
-          <a class="writing-item" href="#">
-            <div class="writing-date">Em breve</div>
-            <div>
-              <h3>Pesquisa, tecnologia e direito</h3>
-              <p>Ideias iniciais sobre presença digital e produção intelectual.</p>
-            </div>
-            <div class="arrow">→</div>
-          </a>
+        <div class="note">
+          Direito Digital e Direito do Consumidor são apresentados como frentes específicas
+          da atuação cível, sem afastar a atuação geral em Direito Civil.
         </div>
       </div>
     </section>
@@ -697,10 +637,9 @@
     <section id="contato">
       <div class="container contact">
         <div class="contact-card">
-          <h3>Contato profissional</h3>
+          <h3>Contato</h3>
           <p>
-            Para contato, propostas, projetos ou envio de mensagens profissionais,
-            utilize o e-mail abaixo.
+            Para contato profissional, utilize o e-mail abaixo.
           </p>
 
           <div class="contact-links">
@@ -709,16 +648,14 @@
         </div>
 
         <div class="contact-card">
-          <h3>Presença digital</h3>
+          <h3>Redes</h3>
           <p>
-            Esta seção pode receber links para LinkedIn, Instagram, GitHub,
-            currículo, portfólio ou qualquer outra página pública.
+            Perfis profissionais e canais de contato.
           </p>
 
           <div class="contact-links">
-            <a href="#">LinkedIn — adicionar link</a>
-            <a href="#">Instagram — adicionar link</a>
-            <a href="#">GitHub — adicionar link</a>
+            <a href="https://www.linkedin.com/in/brenooto" target="_blank" rel="noopener noreferrer">LinkedIn · brenooto</a>
+            <a href="https://www.instagram.com/breno.oto" target="_blank" rel="noopener noreferrer">Instagram · breno.oto</a>
           </div>
         </div>
       </div>
@@ -728,7 +665,7 @@
   <footer>
     <div class="container footer-inner">
       <span>© 2026 Breno Oto. Todos os direitos reservados.</span>
-      <span>Feito com GitHub Pages.</span>
+      <span>Contato profissional.</span>
     </div>
   </footer>
 </body>
