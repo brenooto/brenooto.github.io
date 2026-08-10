@@ -921,8 +921,12 @@
     .service-row,
     .service-row.is-active {
       --scene-image-scale: 1.075;
+      --scene-image-x: 0%;
       --scene-image-y: 0px;
       --scene-copy-y: 22px;
+      --scene-reveal-inset: 0%;
+      --scene-reveal-opacity: 1;
+      --scene-reveal-x: 0%;
       position: relative;
       top: auto;
       z-index: auto;
@@ -1042,6 +1046,14 @@
       isolation: isolate;
     }
 
+    html.has-scroll-motion .service-visual {
+      clip-path: inset(0 var(--scene-reveal-inset) 0 0);
+      opacity: var(--scene-reveal-opacity);
+      transform: translate3d(var(--scene-reveal-x), 0, 0);
+      transform-origin: left center;
+      will-change: clip-path, opacity, transform;
+    }
+
     .service-visual::before {
       content: '';
       position: absolute;
@@ -1070,7 +1082,7 @@
       display: block;
       object-fit: cover;
       filter: grayscale(1) contrast(1.14) brightness(0.84);
-      transform: translate3d(0, var(--scene-image-y), 0) scale(var(--scene-image-scale));
+      transform: translate3d(var(--scene-image-x), var(--scene-image-y), 0) scale(var(--scene-image-scale));
       transition: filter 0.65s ease;
       will-change: transform;
     }
@@ -1201,8 +1213,10 @@
     @media (prefers-reduced-motion: reduce) {
       .service-copy,
       .service-row.is-active .service-copy,
+      .service-visual,
       .service-visual img,
       .service-row.is-active .service-visual img {
+        clip-path: none !important;
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
@@ -1274,7 +1288,7 @@
         <!--
           Proveniência das imagens (não exibida na interface; uso permitido pela licença Pexels):
           01 Instagram — Jobert Enamno: https://www.pexels.com/photo/young-woman-using-smartphone-in-cozy-cafe-31446172/
-          02 WhatsApp — Anton: https://www.pexels.com/photo/a-person-holding-a-cellphone-with-logo-on-the-screen-4132538/
+          02 WhatsApp — RDNE Stock project: https://www.pexels.com/photo/close-up-view-of-man-texting-on-phone-10376167/
           03 Facebook — Gaurav Vishwakarma: https://www.pexels.com/photo/dark-desk-setup-with-laptop-and-keyboard-35697247/
           04 Direito do consumidor — Pavel Danilyuk: https://www.pexels.com/photo/a-person-making-payment-using-smartphone-6812431/
           05 Crimes digitais — Markus Spiske: https://www.pexels.com/photo/technology-computer-lines-board-193350/
@@ -1304,7 +1318,7 @@
               </ul>
             </div>
             <figure class="service-visual">
-              <img src="https://images.pexels.com/photos/4132538/pexels-photo-4132538.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Mão segurando um telefone com o aplicativo WhatsApp na tela" loading="lazy" decoding="async" />
+              <img src="https://images.pexels.com/photos/10376167/pexels-photo-10376167.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Mãos digitando mensagens em um telefone celular" loading="lazy" decoding="async" />
             </figure>
           </article>
 
@@ -1463,6 +1477,8 @@
         return;
       }
 
+      document.documentElement.classList.add('has-scroll-motion');
+
       if ('IntersectionObserver' in window) {
         const revealObserver = new IntersectionObserver(function (entries, observer) {
           entries.forEach(function (entry) {
@@ -1530,14 +1546,27 @@
               0,
               1
             );
+            const visual = row.querySelector('.service-visual');
+            const visualRect = visual ? visual.getBoundingClientRect() : rect;
+            const revealRaw = clamp(
+              (window.innerHeight * 0.94 - visualRect.top) / Math.max(window.innerHeight * 0.72, 1),
+              0,
+              1
+            );
+            const revealProgress = revealRaw * revealRaw * (3 - 2 * revealRaw);
             const imageScale = 1.09 - sceneProgress * 0.09;
             const imageY = (0.5 - sceneProgress) * 38;
             const copyY = (0.5 - sceneProgress) * 34;
+            const revealShift = (1 - revealProgress) * 18;
             const centerDistance = Math.abs((rect.top + rect.height * 0.5) - window.innerHeight * 0.52);
 
             row.style.setProperty('--scene-image-scale', imageScale.toFixed(4));
+            row.style.setProperty('--scene-image-x', revealShift.toFixed(2) + '%');
             row.style.setProperty('--scene-image-y', imageY.toFixed(2) + 'px');
             row.style.setProperty('--scene-copy-y', copyY.toFixed(2) + 'px');
+            row.style.setProperty('--scene-reveal-inset', ((1 - revealProgress) * 100).toFixed(2) + '%');
+            row.style.setProperty('--scene-reveal-opacity', Math.min(revealProgress * 1.5, 1).toFixed(4));
+            row.style.setProperty('--scene-reveal-x', (-revealShift).toFixed(2) + '%');
 
             if (listIsVisible && centerDistance < shortestDistance) {
               shortestDistance = centerDistance;
