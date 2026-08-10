@@ -870,14 +870,52 @@
       line-height: 0.84;
     }
 
+    .hero-word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(9px);
+      transform: translate3d(0, 0.48em, 0);
+      animation: hero-word-in 1.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: var(--word-delay, 0ms);
+      will-change: opacity, filter, transform;
+    }
+
+    @keyframes hero-word-in {
+      from {
+        opacity: 0;
+        filter: blur(9px);
+        transform: translate3d(0, 0.48em, 0);
+      }
+      to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes hero-support-in {
+      from {
+        opacity: 0;
+        filter: blur(6px);
+        transform: translate3d(0, 20px, 0);
+      }
+      to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
     .hero .eyebrow {
       margin-bottom: clamp(18px, 3svh, 30px);
+      animation: hero-support-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
     }
 
     .hero-bottom {
       margin-top: clamp(24px, 4svh, 38px);
       padding-top: clamp(18px, 3svh, 26px);
       gap: clamp(18px, 2.6svh, 24px);
+      animation: hero-support-in 1s cubic-bezier(0.22, 1, 0.36, 1) 680ms both;
     }
 
     .hero-title em {
@@ -934,12 +972,8 @@
     .service-row,
     .service-row.is-active {
       --scene-image-scale: 1.075;
-      --scene-image-x: 0%;
       --scene-image-y: 0px;
       --scene-copy-y: 22px;
-      --scene-reveal-inset: 0%;
-      --scene-reveal-opacity: 1;
-      --scene-reveal-x: 0%;
       position: relative;
       top: auto;
       z-index: auto;
@@ -967,6 +1001,17 @@
     .service-row:nth-child(even) .service-visual {
       grid-column: 1;
       grid-row: 1;
+    }
+
+    @media (min-width: 901px) {
+      .service-row:nth-child(odd) {
+        grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+        gap: clamp(108px, 12vw, 148px);
+      }
+
+      .service-row:nth-child(odd) .service-name {
+        font-size: clamp(52px, 6vw, 92px);
+      }
     }
 
     .service-copy {
@@ -1063,11 +1108,37 @@
     }
 
     html.has-scroll-motion .service-visual {
-      clip-path: inset(0 var(--scene-reveal-inset) 0 0);
-      opacity: var(--scene-reveal-opacity);
-      transform: translate3d(var(--scene-reveal-x), 0, 0);
+      clip-path: inset(0 100% 0 0);
+      opacity: 0;
+      transform: translate3d(-18%, 0, 0);
       transform-origin: left center;
+      transition:
+        clip-path 1.55s cubic-bezier(0.76, 0, 0.24, 1),
+        transform 1.55s cubic-bezier(0.76, 0, 0.24, 1),
+        opacity 1.05s ease;
       will-change: clip-path, opacity, transform;
+    }
+
+    html.has-scroll-motion .service-visual.is-image-revealed {
+      clip-path: inset(0);
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .service-image-anchor {
+      width: 100%;
+      height: 100%;
+      transform: translate3d(0, 0, 0);
+    }
+
+    html.has-scroll-motion .service-image-anchor {
+      transform: translate3d(18%, 0, 0);
+      transition: transform 1.55s cubic-bezier(0.76, 0, 0.24, 1);
+      will-change: transform;
+    }
+
+    html.has-scroll-motion .service-visual.is-image-revealed .service-image-anchor {
+      transform: translate3d(0, 0, 0);
     }
 
     .service-visual::before {
@@ -1088,7 +1159,7 @@
       display: block;
       object-fit: cover;
       filter: grayscale(1) contrast(1.14) brightness(0.84);
-      transform: translate3d(var(--scene-image-x), var(--scene-image-y), 0) scale(var(--scene-image-scale));
+      transform: translate3d(0, var(--scene-image-y), 0) scale(var(--scene-image-scale));
       transition: filter 0.65s ease;
       will-change: transform;
     }
@@ -1340,12 +1411,22 @@
       .service-copy,
       .service-row.is-active .service-copy,
       .service-visual,
+      .service-image-anchor,
       .service-visual img,
       .service-row.is-active .service-visual img {
         clip-path: none !important;
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
+      }
+
+      .hero-word,
+      .hero .eyebrow,
+      .hero-bottom {
+        opacity: 1 !important;
+        filter: none !important;
+        transform: none !important;
+        animation: none !important;
       }
     }
 
@@ -1374,7 +1455,7 @@
       <div class="wrap hero-grid">
         <div class="hero-content">
           <p class="eyebrow">Breno Oto · Advogado</p>
-          <h1 class="hero-title" id="titulo-principal">Direito do consumidor <em>e contas digitais.</em></h1>
+          <h1 class="hero-title" id="titulo-principal"><span class="hero-word" style="--word-delay: 90ms">Direito</span> <span class="hero-word" style="--word-delay: 180ms">do</span> <span class="hero-word" style="--word-delay: 270ms">consumidor</span><em><span class="hero-word" style="--word-delay: 390ms">e</span> <span class="hero-word" style="--word-delay: 480ms">contas</span> <span class="hero-word" style="--word-delay: 570ms">digitais.</span></em></h1>
           <div class="hero-bottom">
             <div class="hero-copy">
               <p class="hero-text">Atuação em conflitos de consumo, cobranças indevidas, fraudes, serviços digitais e recuperação de contas bloqueadas, invadidas ou desativadas no WhatsApp, Instagram e Facebook. Atendimento online em todo o Brasil.</p>
@@ -1430,7 +1511,9 @@
               </ul>
             </div>
             <figure class="service-visual">
-              <img src="https://images.pexels.com/photos/31446172/pexels-photo-31446172.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Mulher jovem utilizando um telefone celular em ambiente contemporâneo" loading="lazy" decoding="async" />
+              <div class="service-image-anchor">
+                <img src="https://images.pexels.com/photos/31446172/pexels-photo-31446172.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Mulher jovem utilizando um telefone celular em ambiente contemporâneo" loading="lazy" decoding="async" />
+              </div>
             </figure>
           </article>
 
@@ -1444,7 +1527,9 @@
               </ul>
             </div>
             <figure class="service-visual">
-              <img src="https://images.pexels.com/photos/10376167/pexels-photo-10376167.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Mãos digitando mensagens em um telefone celular" loading="lazy" decoding="async" />
+              <div class="service-image-anchor">
+                <img src="https://images.pexels.com/photos/10376167/pexels-photo-10376167.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Mãos digitando mensagens em um telefone celular" loading="lazy" decoding="async" />
+              </div>
             </figure>
           </article>
 
@@ -1458,7 +1543,9 @@
               </ul>
             </div>
             <figure class="service-visual">
-              <img src="https://images.pexels.com/photos/35697247/pexels-photo-35697247.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Computador portátil em uma estação de trabalho com iluminação escura" loading="lazy" decoding="async" />
+              <div class="service-image-anchor">
+                <img src="https://images.pexels.com/photos/35697247/pexels-photo-35697247.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Computador portátil em uma estação de trabalho com iluminação escura" loading="lazy" decoding="async" />
+              </div>
             </figure>
           </article>
 
@@ -1472,7 +1559,9 @@
               </ul>
             </div>
             <figure class="service-visual">
-              <img src="https://images.pexels.com/photos/6812431/pexels-photo-6812431.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Pagamento por aproximação com telefone em um terminal de venda" loading="lazy" decoding="async" />
+              <div class="service-image-anchor">
+                <img src="https://images.pexels.com/photos/6812431/pexels-photo-6812431.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Pagamento por aproximação com telefone em um terminal de venda" loading="lazy" decoding="async" />
+              </div>
             </figure>
           </article>
 
@@ -1486,7 +1575,9 @@
               </ul>
             </div>
             <figure class="service-visual">
-              <img src="https://images.pexels.com/photos/193350/pexels-photo-193350.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Computador portátil exibindo código em um ambiente escuro" loading="lazy" decoding="async" />
+              <div class="service-image-anchor">
+                <img src="https://images.pexels.com/photos/193350/pexels-photo-193350.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1600" alt="Computador portátil exibindo código em um ambiente escuro" loading="lazy" decoding="async" />
+              </div>
             </figure>
           </article>
         </div>
@@ -1574,6 +1665,7 @@
       const heroContent = document.querySelector('.hero-content');
       const serviceList = document.querySelector('.service-list');
       const serviceRows = Array.from(document.querySelectorAll('.service-row'));
+      const serviceVisuals = Array.from(document.querySelectorAll('.service-visual'));
       const contact = document.querySelector('.contact');
       const progress = document.createElement('div');
 
@@ -1600,6 +1692,9 @@
         revealTargets.forEach(function (element) {
           element.classList.add('is-revealed');
         });
+        serviceVisuals.forEach(function (visual) {
+          visual.classList.add('is-image-revealed');
+        });
         return;
       }
 
@@ -1617,12 +1712,31 @@
           rootMargin: '0px 0px -7% 0px'
         });
 
+        const imageRevealObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            const visual = entry.target.querySelector('.service-visual');
+            if (visual) visual.classList.add('is-image-revealed');
+            observer.unobserve(entry.target);
+          });
+        }, {
+          threshold: 0.08,
+          rootMargin: '0px 0px -10% 0px'
+        });
+
         revealTargets.forEach(function (element) {
           revealObserver.observe(element);
+        });
+
+        serviceRows.forEach(function (row) {
+          imageRevealObserver.observe(row);
         });
       } else {
         revealTargets.forEach(function (element) {
           element.classList.add('is-revealed');
+        });
+        serviceVisuals.forEach(function (visual) {
+          visual.classList.add('is-image-revealed');
         });
       }
 
@@ -1672,27 +1786,14 @@
               0,
               1
             );
-            const visual = row.querySelector('.service-visual');
-            const visualRect = visual ? visual.getBoundingClientRect() : rect;
-            const revealRaw = clamp(
-              (window.innerHeight * 0.94 - visualRect.top) / Math.max(window.innerHeight * 0.72, 1),
-              0,
-              1
-            );
-            const revealProgress = revealRaw * revealRaw * (3 - 2 * revealRaw);
             const imageScale = 1.09 - sceneProgress * 0.09;
             const imageY = (0.5 - sceneProgress) * 38;
             const copyY = (0.5 - sceneProgress) * 34;
-            const revealShift = (1 - revealProgress) * 18;
             const centerDistance = Math.abs((rect.top + rect.height * 0.5) - window.innerHeight * 0.52);
 
             row.style.setProperty('--scene-image-scale', imageScale.toFixed(4));
-            row.style.setProperty('--scene-image-x', revealShift.toFixed(2) + '%');
             row.style.setProperty('--scene-image-y', imageY.toFixed(2) + 'px');
             row.style.setProperty('--scene-copy-y', copyY.toFixed(2) + 'px');
-            row.style.setProperty('--scene-reveal-inset', ((1 - revealProgress) * 100).toFixed(2) + '%');
-            row.style.setProperty('--scene-reveal-opacity', Math.min(revealProgress * 1.5, 1).toFixed(4));
-            row.style.setProperty('--scene-reveal-x', (-revealShift).toFixed(2) + '%');
 
             if (listIsVisible && centerDistance < shortestDistance) {
               shortestDistance = centerDistance;
