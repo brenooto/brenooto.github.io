@@ -75,7 +75,7 @@
       --whatsapp: #25d366;
       --max: 1160px;
       --pad: 40px;
-      --header-frame-height: 68px;
+      --header-frame-height: 69px;
       --footer-frame-height: 73px;
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans: 'Inter', system-ui, sans-serif;
@@ -1135,12 +1135,12 @@
     }
 
     .contact {
-      min-height: calc(100svh - var(--footer-frame-height));
+      min-height: calc(100svh - var(--header-frame-height) - var(--footer-frame-height));
       display: grid;
     }
 
     .contact-inner {
-      min-height: calc(100svh - var(--footer-frame-height));
+      min-height: calc(100svh - var(--header-frame-height) - var(--footer-frame-height));
       padding-top: clamp(48px, 7svh, 76px);
       padding-bottom: clamp(48px, 7svh, 76px);
       gap: clamp(32px, 6svh, 60px);
@@ -1266,7 +1266,7 @@
       }
 
       .contact-inner {
-        min-height: calc(100svh - var(--footer-frame-height));
+        min-height: calc(100svh - var(--header-frame-height) - var(--footer-frame-height));
         padding-top: clamp(30px, 5svh, 48px);
         padding-bottom: clamp(30px, 5svh, 48px);
         gap: clamp(28px, 5svh, 44px);
