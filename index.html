@@ -1006,7 +1006,7 @@
     @media (min-width: 901px) {
       .service-row:nth-child(odd) {
         grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
-        gap: clamp(84px, 9vw, 132px);
+        gap: clamp(108px, 12vw, 148px);
       }
 
       .service-row:nth-child(odd) .service-name {
@@ -1715,7 +1715,8 @@
         const imageRevealObserver = new IntersectionObserver(function (entries, observer) {
           entries.forEach(function (entry) {
             if (!entry.isIntersecting) return;
-            entry.target.classList.add('is-image-revealed');
+            const visual = entry.target.querySelector('.service-visual');
+            if (visual) visual.classList.add('is-image-revealed');
             observer.unobserve(entry.target);
           });
         }, {
@@ -1727,8 +1728,8 @@
           revealObserver.observe(element);
         });
 
-        serviceVisuals.forEach(function (visual) {
-          imageRevealObserver.observe(visual);
+        serviceRows.forEach(function (row) {
+          imageRevealObserver.observe(row);
         });
       } else {
         revealTargets.forEach(function (element) {
