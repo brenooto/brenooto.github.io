@@ -888,23 +888,20 @@
 
     .hero-word {
       display: inline-block;
-      opacity: 0;
-      filter: blur(9px);
-      transform: translate3d(0, 0.48em, 0);
-      animation: hero-word-in 1.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-      animation-delay: var(--word-delay, 0ms);
-      will-change: opacity, filter, transform;
     }
 
-    @keyframes hero-word-in {
+    .hero-title {
+      animation: hero-title-in 1.7s cubic-bezier(0.16, 1, 0.3, 1) 360ms both;
+      will-change: opacity, transform;
+    }
+
+    @keyframes hero-title-in {
       from {
         opacity: 0;
-        filter: blur(9px);
-        transform: translate3d(0, 0.48em, 0);
+        transform: translate3d(0, 0.5em, 0);
       }
       to {
         opacity: 1;
-        filter: blur(0);
         transform: translate3d(0, 0, 0);
       }
     }
@@ -912,8 +909,8 @@
     @keyframes hero-support-in {
       from {
         opacity: 0;
-        filter: blur(6px);
-        transform: translate3d(0, 20px, 0);
+        filter: blur(2px);
+        transform: translate3d(0, 32px, 0);
       }
       to {
         opacity: 1;
@@ -924,14 +921,14 @@
 
     .hero .eyebrow {
       margin-bottom: clamp(18px, 3svh, 30px);
-      animation: hero-support-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 40ms both;
+      animation: hero-support-in 1.35s cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
     }
 
     .hero-bottom {
       margin-top: clamp(24px, 4svh, 38px);
       padding-top: clamp(18px, 3svh, 26px);
       gap: clamp(18px, 2.6svh, 24px);
-      animation: hero-support-in 1s cubic-bezier(0.22, 1, 0.36, 1) 680ms both;
+      animation: hero-support-in 1.45s cubic-bezier(0.16, 1, 0.3, 1) 960ms both;
     }
 
     .hero-title em {
@@ -990,6 +987,10 @@
       --scene-image-scale: 1.075;
       --scene-image-y: 0px;
       --scene-copy-y: 22px;
+      --image-reveal-clip: 100%;
+      --image-reveal-shift: 18%;
+      --image-reveal-counter: -18%;
+      --image-reveal-opacity: 0;
       position: relative;
       top: auto;
       z-index: auto;
@@ -1118,43 +1119,34 @@
       overflow: hidden;
       border: 0;
       outline: 0;
-      background: #24231f;
+      background: transparent;
       box-shadow: none;
       isolation: isolate;
     }
 
     html.has-scroll-motion .service-visual {
-      clip-path: inset(0 100% 0 0);
-      opacity: 0;
-      transform: translate3d(-18%, 0, 0);
+      clip-path: inset(0 var(--image-reveal-clip) 0 0);
+      opacity: var(--image-reveal-opacity);
+      transform: translate3d(var(--image-reveal-shift), 0, 0);
       transform-origin: left center;
       transition:
-        clip-path 1.55s cubic-bezier(0.76, 0, 0.24, 1),
-        transform 1.55s cubic-bezier(0.76, 0, 0.24, 1),
-        opacity 1.05s ease;
+        clip-path 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.62s ease-out;
       will-change: clip-path, opacity, transform;
-    }
-
-    html.has-scroll-motion .service-visual.is-image-revealed {
-      clip-path: inset(0);
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
     }
 
     .service-image-anchor {
       width: 100%;
       height: 100%;
+      background: transparent;
       transform: translate3d(0, 0, 0);
     }
 
     html.has-scroll-motion .service-image-anchor {
-      transform: translate3d(18%, 0, 0);
-      transition: transform 1.55s cubic-bezier(0.76, 0, 0.24, 1);
+      transform: translate3d(var(--image-reveal-counter), 0, 0);
+      transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: transform;
-    }
-
-    html.has-scroll-motion .service-visual.is-image-revealed .service-image-anchor {
-      transform: translate3d(0, 0, 0);
     }
 
     .service-visual::before {
@@ -1436,6 +1428,7 @@
         transition: none !important;
       }
 
+      .hero-title,
       .hero-word,
       .hero .eyebrow,
       .hero-bottom {
@@ -1681,7 +1674,6 @@
       const heroContent = document.querySelector('.hero-content');
       const serviceList = document.querySelector('.service-list');
       const serviceRows = Array.from(document.querySelectorAll('.service-row'));
-      const serviceVisuals = Array.from(document.querySelectorAll('.service-visual'));
       const contact = document.querySelector('.contact');
       const progress = document.createElement('div');
 
@@ -1708,9 +1700,6 @@
         revealTargets.forEach(function (element) {
           element.classList.add('is-revealed');
         });
-        serviceVisuals.forEach(function (visual) {
-          visual.classList.add('is-image-revealed');
-        });
         return;
       }
 
@@ -1728,31 +1717,12 @@
           rootMargin: '0px 0px -7% 0px'
         });
 
-        const imageRevealObserver = new IntersectionObserver(function (entries, observer) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            const visual = entry.target.querySelector('.service-visual');
-            if (visual) visual.classList.add('is-image-revealed');
-            observer.unobserve(entry.target);
-          });
-        }, {
-          threshold: 0.08,
-          rootMargin: '0px 0px -10% 0px'
-        });
-
         revealTargets.forEach(function (element) {
           revealObserver.observe(element);
-        });
-
-        serviceRows.forEach(function (row) {
-          imageRevealObserver.observe(row);
         });
       } else {
         revealTargets.forEach(function (element) {
           element.classList.add('is-revealed');
-        });
-        serviceVisuals.forEach(function (visual) {
-          visual.classList.add('is-image-revealed');
         });
       }
 
@@ -1805,11 +1775,21 @@
             const imageScale = 1.09 - sceneProgress * 0.09;
             const imageY = (0.5 - sceneProgress) * 38;
             const copyY = (0.5 - sceneProgress) * 34;
+            const imageRevealProgress = clamp(
+              (window.innerHeight * 0.98 - rect.top) / Math.max(window.innerHeight * 0.68, 420),
+              0,
+              1
+            );
+            const imageRevealRemaining = 1 - imageRevealProgress;
             const centerDistance = Math.abs((rect.top + rect.height * 0.5) - window.innerHeight * 0.52);
 
             row.style.setProperty('--scene-image-scale', imageScale.toFixed(4));
             row.style.setProperty('--scene-image-y', imageY.toFixed(2) + 'px');
             row.style.setProperty('--scene-copy-y', copyY.toFixed(2) + 'px');
+            row.style.setProperty('--image-reveal-clip', (imageRevealRemaining * 100).toFixed(2) + '%');
+            row.style.setProperty('--image-reveal-shift', (imageRevealRemaining * 18).toFixed(2) + '%');
+            row.style.setProperty('--image-reveal-counter', (imageRevealRemaining * -18).toFixed(2) + '%');
+            row.style.setProperty('--image-reveal-opacity', imageRevealProgress.toFixed(4));
 
             if (listIsVisible && centerDistance < shortestDistance) {
               shortestDistance = centerDistance;
