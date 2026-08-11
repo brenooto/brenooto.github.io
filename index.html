@@ -1173,6 +1173,12 @@
       pointer-events: none;
     }
 
+    .service-row:nth-child(even) .service-visual::before {
+      background:
+        linear-gradient(180deg, rgba(17, 17, 16, 0.05), rgba(17, 17, 16, 0.36)),
+        linear-gradient(270deg, rgba(168, 141, 89, 0.18), transparent 42%);
+    }
+
     .service-visual img {
       width: 100%;
       height: calc(100% + 56px);
