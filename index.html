@@ -1812,6 +1812,8 @@
 
           serviceRows.forEach(function (row, index) {
             const rect = row.getBoundingClientRect();
+            const visual = row.querySelector('.service-visual');
+            const visualRect = visual ? visual.getBoundingClientRect() : rect;
             const sceneProgress = clamp(
               (window.innerHeight - rect.top) / Math.max(window.innerHeight + rect.height, 1),
               0,
@@ -1825,7 +1827,7 @@
               1
             );
             const imageRevealProgress = clamp(
-              (window.innerHeight * 0.98 - rect.top) / Math.max(window.innerHeight * 0.68, 420),
+              (window.innerHeight * 0.96 - visualRect.top) / Math.max(window.innerHeight * 0.72, 420),
               0,
               1
             );
