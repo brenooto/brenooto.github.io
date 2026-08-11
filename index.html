@@ -1006,10 +1006,9 @@
     .service-row.is-active {
       --scene-image-scale: 1.075;
       --scene-image-y: 0px;
-      --scene-copy-y: 22px;
-      --image-reveal-clip: 100%;
-      --image-reveal-shift: 18%;
-      --image-reveal-counter: -18%;
+      --copy-reveal-opacity: 0;
+      --image-panel-x: 100%;
+      --image-content-x: -100%;
       --image-reveal-opacity: 0;
       position: relative;
       top: auto;
@@ -1056,14 +1055,10 @@
       top: clamp(126px, 24vh, 218px);
       align-self: start;
       padding: clamp(20px, 4vw, 54px) 0;
-      opacity: 0.62;
-      transform: translate3d(0, var(--scene-copy-y), 0);
-      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, transform;
-    }
-
-    .service-row.is-active .service-copy {
-      opacity: 1;
+      opacity: var(--copy-reveal-opacity);
+      transform: none;
+      transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+      will-change: opacity;
     }
 
     .service-kicker {
@@ -1145,15 +1140,13 @@
     }
 
     html.has-scroll-motion .service-visual {
-      clip-path: inset(0 var(--image-reveal-clip) 0 0);
       opacity: var(--image-reveal-opacity);
-      transform: translate3d(var(--image-reveal-shift), 0, 0);
-      transform-origin: left center;
+      transform: translate3d(var(--image-panel-x), 0, 0);
+      transform-origin: center center;
       transition:
-        clip-path 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        transform 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        opacity 0.8s ease-out;
-      will-change: clip-path, opacity, transform;
+        transform 1.15s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.9s ease-out;
+      will-change: opacity, transform;
     }
 
     .service-image-anchor {
@@ -1164,8 +1157,8 @@
     }
 
     html.has-scroll-motion .service-image-anchor {
-      transform: translate3d(var(--image-reveal-counter), 0, 0);
-      transition: transform 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translate3d(var(--image-content-x), 0, 0);
+      transition: transform 1.15s cubic-bezier(0.22, 0.61, 0.36, 1);
       will-change: transform;
     }
 
@@ -1280,7 +1273,7 @@
         position: relative;
         top: auto;
         padding: 0;
-        opacity: 1;
+        opacity: var(--copy-reveal-opacity);
         transform: none;
       }
 
@@ -1826,21 +1819,26 @@
             );
             const imageScale = 1.09 - sceneProgress * 0.09;
             const imageY = (0.5 - sceneProgress) * 38;
-            const copyY = (0.5 - sceneProgress) * 34;
+            const copyRevealProgress = clamp(
+              (window.innerHeight * 0.94 - rect.top) / Math.max(window.innerHeight * 0.58, 380),
+              0,
+              1
+            );
             const imageRevealProgress = clamp(
               (window.innerHeight * 0.98 - rect.top) / Math.max(window.innerHeight * 0.68, 420),
               0,
               1
             );
             const imageRevealRemaining = 1 - imageRevealProgress;
+            const imageEntryDirection = index % 2 === 0 ? 1 : -1;
+            const imagePanelX = imageRevealRemaining * 100 * imageEntryDirection;
             const centerDistance = Math.abs((rect.top + rect.height * 0.5) - window.innerHeight * 0.52);
 
             row.style.setProperty('--scene-image-scale', imageScale.toFixed(4));
             row.style.setProperty('--scene-image-y', imageY.toFixed(2) + 'px');
-            row.style.setProperty('--scene-copy-y', copyY.toFixed(2) + 'px');
-            row.style.setProperty('--image-reveal-clip', (imageRevealRemaining * 100).toFixed(2) + '%');
-            row.style.setProperty('--image-reveal-shift', (imageRevealRemaining * 18).toFixed(2) + '%');
-            row.style.setProperty('--image-reveal-counter', (imageRevealRemaining * -18).toFixed(2) + '%');
+            row.style.setProperty('--copy-reveal-opacity', copyRevealProgress.toFixed(4));
+            row.style.setProperty('--image-panel-x', imagePanelX.toFixed(2) + '%');
+            row.style.setProperty('--image-content-x', (imagePanelX * -1).toFixed(2) + '%');
             row.style.setProperty('--image-reveal-opacity', imageRevealProgress.toFixed(4));
 
             if (listIsVisible && centerDistance < shortestDistance) {
