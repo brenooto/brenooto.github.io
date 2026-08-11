@@ -898,7 +898,7 @@
     }
 
     html.hero-motion-pending.hero-motion-ready .hero-title {
-      animation: hero-title-in 1.7s cubic-bezier(0.16, 1, 0.3, 1) 360ms both;
+      animation: hero-title-in 2s cubic-bezier(0.22, 0.61, 0.36, 1) 420ms both;
     }
 
     @keyframes hero-title-in {
@@ -938,7 +938,7 @@
     }
 
     html.hero-motion-pending.hero-motion-ready .hero .eyebrow {
-      animation: hero-support-in 1.35s cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+      animation: hero-support-in 1.55s cubic-bezier(0.22, 0.61, 0.36, 1) 140ms both;
     }
 
     .hero-bottom {
@@ -948,7 +948,7 @@
     }
 
     html.hero-motion-pending.hero-motion-ready .hero-bottom {
-      animation: hero-support-in 1.45s cubic-bezier(0.16, 1, 0.3, 1) 960ms both;
+      animation: hero-support-in 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) 1120ms both;
     }
 
     .hero-title em {
@@ -1150,9 +1150,9 @@
       transform: translate3d(var(--image-reveal-shift), 0, 0);
       transform-origin: left center;
       transition:
-        clip-path 0.78s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.62s ease-out;
+        clip-path 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.8s ease-out;
       will-change: clip-path, opacity, transform;
     }
 
@@ -1165,7 +1165,7 @@
 
     html.has-scroll-motion .service-image-anchor {
       transform: translate3d(var(--image-reveal-counter), 0, 0);
-      transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform;
     }
 
@@ -1702,7 +1702,7 @@
 
             window.setTimeout(function () {
               root.classList.remove('hero-motion-pending', 'hero-motion-ready');
-            }, 2800);
+            }, 3400);
           });
         });
       }
